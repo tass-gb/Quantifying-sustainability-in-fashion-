@@ -5,10 +5,10 @@ Id,Brand,Product_Name,Price,Category,Subcategory,Material,Percentage_Material,Ma
 2,H&M,Oversize Jumper,€ 24.99,Woman,Jumper,Acrylic,13.0,6.0,30.0,110.0,40.0,Machine wash 30°C,0.04,0.5,15.0,China,0.65,0.4,0.6,,0.0,,0.0
 2,H&M,Oversize Jumper,€ 24.99,Woman,Jumper,Wool,5.0,14.0,800.0,160.0,45.0,Machine wash 30°C,0.04,0.5,15.0,China,0.65,0.4,0.6,,0.0,,0.0
 2,H&M,Oversize Jumper,€ 24.99,Woman,Jumper,Elastane,3.0,9.0,50.0,150.0,45.0,Machine wash 30°C,0.04,0.5,15.0,China,0.65,0.4,0.6,,0.0,,0.0
-3,Zara,Soft Knit Jumper,€ 25.95,Woman,Jumper,Wool,7.0,14.0,800.0,160.0,45.0,Machine wash 30°C,0.04,0.5,15.0,China,0.65,0.4,0.6,RWS,0.15,RCS,
-3,Zara,Soft Knit Jumper,€ 25.95,Woman,Jumper,Recycled Polyester,39.0,5.5,20.0,60.0,20.0,Machine wash 30°C,0.04,0.5,15.0,China,0.65,0.4,0.6,RWS,0.15,RCS,
-3,Zara,Soft Knit Jumper,€ 25.95,Woman,Jumper,Recycled Acrylic,52.0,3.5,15.0,55.0,20.0,Machine wash 30°C,0.04,0.5,15.0,China,0.65,0.4,0.6,RWS,0.15,RCS,
-3,Zara,Soft Knit Jumper,€ 25.95,Woman,Jumper,Elastane,2.0,9.0,50.0,150.0,45.0,Machine wash 30°C,0.04,0.5,15.0,China,0.65,0.4,0.6,RWS,0.15,RCS,
+3,Zara,Soft Knit Jumper,€ 25.95,Woman,Jumper,Wool,7.0,14.0,800.0,160.0,45.0,Machine wash 30°C,0.04,0.5,15.0,China,0.65,0.4,0.6,RWS,0.15,RCS,0.1
+3,Zara,Soft Knit Jumper,€ 25.95,Woman,Jumper,Recycled Polyester,39.0,5.5,20.0,60.0,20.0,Machine wash 30°C,0.04,0.5,15.0,China,0.65,0.4,0.6,RWS,0.15,RCS,0.1
+3,Zara,Soft Knit Jumper,€ 25.95,Woman,Jumper,Recycled Acrylic,52.0,3.5,15.0,55.0,20.0,Machine wash 30°C,0.04,0.5,15.0,China,0.65,0.4,0.6,RWS,0.15,RCS,0.1
+3,Zara,Soft Knit Jumper,€ 25.95,Woman,Jumper,Elastane,2.0,9.0,50.0,150.0,45.0,Machine wash 30°C,0.04,0.5,15.0,China,0.65,0.4,0.6,RWS,0.15,RCS,0.1
 4,Zara,Cashmere Oversize Sweater,€ 139.00,Woman,Jumper,Cashmere,100.0,30.0,700.0,200.0,60.0,Hand wash,0.015,0.2,8.0,Cambodia,0.55,0.45,0.75,,0.0,,0.0
 5,Patagonia,Women's Recycled Wool-Blend Crewneck Sweater,€ 160.00,Woman,sweater,Recycled Wool,74.0,,,,,Hand wash,0.015,0.2,8.0,Vietnam,0.45,0.35,0.55,Fair Trade,0.2,,0.0
 5,Patagonia,Women's Recycled Wool-Blend Crewneck Sweater,€ 160.00,Woman,sweater,Recycled Nylon,26.0,5.0,20.0,70.0,18.0,Hand wash,0.015,0.2,8.0,Vietnam,0.45,0.35,0.55,Fair Trade,0.2,,0.0
