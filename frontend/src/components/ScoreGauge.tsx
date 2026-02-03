@@ -6,11 +6,12 @@ interface ScoreGaugeProps {
 }
 
 function getScoreColor(score: number): string {
-  if (score >= 80) return '#10b981'; // green
-  if (score >= 60) return '#84cc16'; // lime
-  if (score >= 40) return '#eab308'; // yellow
-  if (score >= 20) return '#f97316'; // orange
-  return '#ef4444'; // red
+  // Monochrome: darker = better score
+  if (score >= 80) return '#1f2937'; // gray-800
+  if (score >= 60) return '#374151'; // gray-700
+  if (score >= 40) return '#6b7280'; // gray-500
+  if (score >= 20) return '#9ca3af'; // gray-400
+  return '#d1d5db'; // gray-300
 }
 
 function getScoreLabel(score: number): string {
@@ -54,27 +55,23 @@ export function ScoreGauge({ score, size = 'md' }: ScoreGaugeProps) {
               paddingAngle={0}
             >
               <Cell fill={color} />
-              <Cell fill="#e5e7eb" />
+              <Cell fill="#f3f4f6" />
             </Pie>
           </PieChart>
         </ResponsiveContainer>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span
-            className="font-bold"
+            className="font-semibold text-gray-900"
             style={{
               fontSize: size === 'lg' ? '2.5rem' : size === 'md' ? '2rem' : '1.5rem',
-              color,
             }}
           >
             {Math.round(score)}
           </span>
-          <span className="text-gray-500 text-sm">/ 100</span>
+          <span className="text-gray-400 text-sm">/ 100</span>
         </div>
       </div>
-      <span
-        className="mt-2 font-semibold text-sm uppercase tracking-wide"
-        style={{ color }}
-      >
+      <span className="mt-2 font-medium text-sm uppercase tracking-wide text-gray-500">
         {label}
       </span>
     </div>

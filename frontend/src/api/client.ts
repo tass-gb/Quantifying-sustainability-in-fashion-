@@ -52,6 +52,10 @@ export async function getCategories(): Promise<string[]> {
   return fetchJson<string[]>(`${API_BASE}/categories`);
 }
 
+export async function getRandomProduct(): Promise<ScoreResponse> {
+  return fetchJson<ScoreResponse>(`${API_BASE}/products/random`);
+}
+
 // Reference Data API
 export async function getMaterials(): Promise<MaterialReference[]> {
   return fetchJson<MaterialReference[]>(`${API_BASE}/reference/materials`);
