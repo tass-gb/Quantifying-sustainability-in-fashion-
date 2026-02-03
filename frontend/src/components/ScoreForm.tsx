@@ -20,6 +20,7 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
   const [careInstructions, setCareInstructions] = useState<CareReference[]>([]);
   const [certifications, setCertifications] = useState<CertificationReference[]>([]);
   const [loadingRef, setLoadingRef] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const [productName, setProductName] = useState('');
   const [brand, setBrand] = useState('');
@@ -47,11 +48,15 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
         setCareInstructions(care);
         setCertifications(certs);
 
-        // Set defaults
+        // Set defaults after loading
         if (origs.length > 0) setOrigin(origs[0].name);
         if (care.length > 0) setCareInstruction(care[0].name);
+        if (mats.length > 0) {
+          setProductMaterials([{ name: mats[0].name, percentage: 100 }]);
+        }
       } catch (error) {
         console.error('Failed to load reference data:', error);
+        setLoadError('Failed to load reference data. Make sure the API is running.');
       } finally {
         setLoadingRef(false);
       }
@@ -60,7 +65,8 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
   }, []);
 
   const addMaterial = () => {
-    setProductMaterials([...productMaterials, { name: '', percentage: 0 }]);
+    const defaultName = materials.length > 0 ? materials[0].name : '';
+    setProductMaterials([...productMaterials, { name: defaultName, percentage: 0 }]);
   };
 
   const removeMaterial = (index: number) => {
@@ -117,7 +123,19 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
   if (loadingRef) {
     return (
       <div className="flex justify-center items-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className="p-6 bg-gray-100 text-gray-700 rounded-lg">
+        <p className="font-medium mb-2">Error Loading Form</p>
+        <p className="text-sm">{loadError}</p>
+        <p className="text-sm mt-2">
+          Run: <code className="bg-gray-200 px-1 rounded">make dev-backend</code>
+        </p>
       </div>
     );
   }
@@ -125,8 +143,8 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Product Details */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Product Details</h3>
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Product Details</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -137,7 +155,7 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
               type="text"
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
               placeholder="e.g., Organic Cotton T-Shirt"
               required
             />
@@ -151,7 +169,7 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
               type="text"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
               placeholder="e.g., Patagonia"
             />
           </div>
@@ -163,7 +181,7 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white"
             >
               <option value="Woman">Woman</option>
               <option value="Man">Man</option>
@@ -179,7 +197,7 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
               type="text"
               value={subcategory}
               onChange={(e) => setSubcategory(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
               placeholder="e.g., T-shirt, Jumper"
             />
           </div>
@@ -187,10 +205,10 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
       </div>
 
       {/* Materials */}
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">Materials</h3>
-          <span className={`text-sm font-medium ${Math.abs(totalPercentage - 100) < 0.01 ? 'text-green-600' : 'text-red-600'}`}>
+          <h3 className="text-lg font-semibold text-gray-900">Materials</h3>
+          <span className={`text-sm font-medium ${Math.abs(totalPercentage - 100) < 0.01 ? 'text-gray-600' : 'text-gray-900'}`}>
             Total: {totalPercentage}%
           </span>
         </div>
@@ -201,9 +219,8 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
               <select
                 value={material.name}
                 onChange={(e) => updateMaterial(index, 'name', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white"
               >
-                <option value="">Select material...</option>
                 {materials.map((m) => (
                   <option key={m.name} value={m.name}>
                     {m.name} ({m.category})
@@ -218,7 +235,7 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
                 max="100"
                 value={material.percentage}
                 onChange={(e) => updateMaterial(index, 'percentage', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
               />
             </div>
             <span className="py-2 text-gray-500">%</span>
@@ -226,7 +243,7 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
               <button
                 type="button"
                 onClick={() => removeMaterial(index)}
-                className="px-3 py-2 text-red-600 hover:bg-red-50 rounded-md"
+                className="px-3 py-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 Remove
               </button>
@@ -237,15 +254,15 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
         <button
           type="button"
           onClick={addMaterial}
-          className="mt-2 text-sm text-green-600 hover:text-green-700 font-medium"
+          className="mt-2 text-sm text-gray-600 hover:text-gray-900 font-medium"
         >
           + Add Another Material
         </button>
       </div>
 
       {/* Origin & Care */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Manufacturing & Care</h3>
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Manufacturing & Care</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -255,7 +272,7 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
             <select
               value={origin}
               onChange={(e) => setOrigin(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white"
               required
             >
               {origins.map((o) => (
@@ -273,7 +290,7 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
             <select
               value={careInstruction}
               onChange={(e) => setCareInstruction(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white"
               required
             >
               {careInstructions.map((c) => (
@@ -287,8 +304,8 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
       </div>
 
       {/* Certifications */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Certifications</h3>
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Certifications</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -298,7 +315,7 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
             <select
               value={cert1}
               onChange={(e) => setCert1(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white"
             >
               {certifications.map((c) => (
                 <option key={c.name} value={c.name}>
@@ -315,7 +332,7 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
             <select
               value={cert2}
               onChange={(e) => setCert2(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white"
             >
               {certifications.map((c) => (
                 <option key={c.name} value={c.name}>
@@ -331,7 +348,7 @@ export function ScoreForm({ onSubmit, isLoading }: ScoreFormProps) {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full py-3 px-6 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-3 px-6 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? 'Calculating...' : 'Calculate Sustainability Score'}
       </button>
