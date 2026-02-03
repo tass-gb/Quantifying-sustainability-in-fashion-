@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sustainability-scoring"
+version = "0.1.0"
+description = "A data-driven sustainability scoring system for fashion products"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "Lauren Cassidy"}
+]
+keywords = ["sustainability", "fashion", "scoring", "machine-learning"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "scikit-learn>=1.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+notebooks = [
+    "jupyter>=1.0.0",
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/laurencassidy/Quantifying-sustainability-in-fashion-"
+Repository = "https://github.com/laurencassidy/Quantifying-sustainability-in-fashion-"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"sustainability_scoring.reference" = ["*.csv"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+]

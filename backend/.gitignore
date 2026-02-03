@@ -1,0 +1,22 @@
+# Trained models (regenerate with: python train_model.py)
+models/*.joblib
+models/*.pkl
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+venv/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
