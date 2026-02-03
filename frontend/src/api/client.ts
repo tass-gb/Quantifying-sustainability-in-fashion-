@@ -23,7 +23,14 @@ async function fetchJson<T>(url: string, options?: RequestInit): Promise<T> {
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({ detail: 'Unknown error' }));
-    throw new Error(error.detail || `HTTP ${response.status}`);
+    // Handle FastAPI validation errors (detail can be array or string)
+    let message = `HTTP ${response.status}`;
+    if (typeof error.detail === 'string') {
+      message = error.detail;
+    } else if (Array.isArray(error.detail) && error.detail.length > 0) {
+      message = error.detail.map((e: { msg?: string }) => e.msg || 'Validation error').join(', ');
+    }
+    throw new Error(message);
   }
 
   return response.json();
