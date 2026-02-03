@@ -41,8 +41,8 @@ def score_product(
             "Percentage_Material": material.percentage,
             "Origin": product.origin,
             "Care_Instruction": product.care_instruction,
-            "Certification1": product.certification1 or "None",
-            "Certification2": product.certification2 or "None",
+            "Certification1": product.certification1 or "No Certification",
+            "Certification2": product.certification2 or "No Certification",
             "Price": product.price or "0.00",
         }
         rows.append(row)
